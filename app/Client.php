@@ -27,8 +27,5 @@ class Client extends Model
         'deleted_at',
     ];
 
-    public function appointments()
-    {
-        return $this->hasMany(Appointment::class, 'client_id', 'id');
-    }
+   
 }

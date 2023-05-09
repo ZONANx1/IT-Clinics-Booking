@@ -102,7 +102,7 @@
 { data: 'services', name: 'services.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'Desc' ]],
     pageLength: 100,
   };
   $('.datatable-Employee').DataTable(dtOverrideGlobals);

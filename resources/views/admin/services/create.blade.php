@@ -21,16 +21,16 @@
                     {{ trans('cruds.service.fields.name_helper') }}
                 </p>
             </div>
-            <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
-                <label for="price">{{ trans('cruds.service.fields.price') }}</label>
-                <input type="number" id="price" name="price" class="form-control" value="{{ old('price', isset($service) ? $service->price : '') }}" step="0.01">
-                @if($errors->has('price'))
+            <div class="form-group {{ $errors->has('Desc') ? 'has-error' : '' }}">
+                <label for="Desc">{{ trans('cruds.service.fields.Desc') }}</label>
+                <textarea id="Desc" name="Desc" class="form-control ">{{ old('Desc', isset($appointment) ? $appointment->Desc : '') }}</textarea>
+                @if($errors->has('Desc'))
                     <em class="invalid-feedback">
-                        {{ $errors->first('price') }}
+                        {{ $errors->first('Desc') }}
                     </em>
                 @endif
                 <p class="helper-block">
-                    {{ trans('cruds.service.fields.price_helper') }}
+                    {{ trans('cruds.service.fields.Desc_helper') }}
                 </p>
             </div>
             <div>

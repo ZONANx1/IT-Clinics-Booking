@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use App\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -61,12 +64,28 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+    function register(Request $request){
+
+        $request->validate([
+           'name' => ['required', 'string', 'max:255'],
+           'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],  
+           'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-    }
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        $user->password = \Hash::make($request->password);
+        
+
+        if( $user->save() ){
+
+            echo '<script>alert("Welcome to Geeks for Geeks")</script>';
+            return redirect('login');
+            
+        }else{
+            return redirect()->back()->with('error','Failed to register');
+        }
+
+   }
 }

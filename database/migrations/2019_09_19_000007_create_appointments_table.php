@@ -15,8 +15,6 @@ class CreateAppointmentsTable extends Migration
 
             $table->datetime('finish_time');
 
-            $table->decimal('price', 15, 2)->nullable();
-
             $table->longText('comments')->nullable();
 
             $table->timestamps();

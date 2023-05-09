@@ -9,9 +9,9 @@ class AddRelationshipFieldsToAppointmentsTable extends Migration
     public function up()
     {
         Schema::table('appointments', function (Blueprint $table) {
-            $table->unsignedInteger('client_id');
+            $table->unsignedInteger('user_id');
 
-            $table->foreign('client_id', 'client_fk_360714')->references('id')->on('clients');
+            $table->foreign('user_id', 'client_fk_360714')->references('id')->on('users');
 
             $table->unsignedInteger('employee_id')->nullable();
 

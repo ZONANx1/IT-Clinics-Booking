@@ -25,7 +25,7 @@
                         {{ trans('cruds.appointment.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.appointment.fields.client') }}
+                        {{ trans('cruds.appointment.fields.user') }}
                     </th>
                     <th>
                         {{ trans('cruds.appointment.fields.employee') }}
@@ -35,9 +35,6 @@
                     </th>
                     <th>
                         {{ trans('cruds.appointment.fields.finish_time') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.price') }}
                     </th>
                     <th>
                         {{ trans('cruds.appointment.fields.comments') }}
@@ -101,16 +98,15 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'client_name', name: 'client.name' },
+{ data: 'user_name', name: 'user.name' },
 { data: 'employee_name', name: 'employee.name' },
 { data: 'start_time', name: 'start_time' },
 { data: 'finish_time', name: 'finish_time' },
-{ data: 'price', name: 'price' },
 { data: 'comments', name: 'comments' },
 { data: 'services', name: 'services.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 1, 'desc' ]],
+    
     pageLength: 100,
   };
   $('.datatable-Appointment').DataTable(dtOverrideGlobals);

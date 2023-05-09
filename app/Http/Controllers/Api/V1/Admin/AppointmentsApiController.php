@@ -17,7 +17,7 @@ class AppointmentsApiController extends Controller
     {
         abort_if(Gate::denies('appointment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AppointmentResource(Appointment::with(['client', 'employee', 'services'])->get());
+        return new AppointmentResource(Appointment::with(['user', 'employee', 'services'])->get());
     }
 
     public function store(StoreAppointmentRequest $request)
@@ -34,7 +34,7 @@ class AppointmentsApiController extends Controller
     {
         abort_if(Gate::denies('appointment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AppointmentResource($appointment->load(['client', 'employee', 'services']));
+        return new AppointmentResource($appointment->load(['user', 'employee', 'services']));
     }
 
     public function update(UpdateAppointmentRequest $request, Appointment $appointment)

@@ -7,18 +7,26 @@ class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        $users = [
-            [
-                'id'             => 1,
+        User::create([
+        	'id'             => 1,
                 'name'           => 'Admin',
                 'email'          => 'admin@admin.com',
-                'password'       => '$2y$10$Y.jEitizf.DW3V7gxCnMr.SdWN2i1w4gobo28vTLGaFajqcjUl8Oy',
+                'password'       => 'admin123',
                 'remember_token' => null,
-                'created_at'     => '2019-09-19 12:08:28',
-                'updated_at'     => '2019-09-19 12:08:28',
-            ],
-        ];
+                'created_at'     => '2023-05-09 00:00:00',
+                'updated_at'     => '2023-05-09 00:08:00',
+        ]);
 
-        User::insert($users);
+        User::create([
+        	'id'             => 2,
+                'name'           => 'Authoriser',
+                'email'          => 'authoriser@authoriser.com',
+                'password'       => 'authoriser123',
+                'remember_token' => null,
+                'created_at'     => '2023-05-09 00:00:00',
+                'updated_at'     => '2023-05-09 00:08:00',
+        ]);
+
+     
     }
 }

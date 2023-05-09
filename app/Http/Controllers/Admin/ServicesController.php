@@ -44,8 +44,8 @@ class ServicesController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
-            $table->editColumn('price', function ($row) {
-                return $row->price ? $row->price : "";
+            $table->editColumn('Desc', function ($row) {
+                return $row->Desc ? $row->Desc : "";
             });
 
             $table->rawColumns(['actions', 'placeholder']);

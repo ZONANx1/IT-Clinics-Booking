@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Appointment;
-use App\Client;
+use App\User;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAppointmentRequest;
@@ -20,7 +20,7 @@ class AppointmentsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Appointment::with(['client', 'employee', 'services'])->select(sprintf('%s.*', (new Appointment)->table));
+            $query = Appointment::with(['user', 'employee', 'services'])->select(sprintf('%s.*', (new Appointment)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -44,17 +44,15 @@ class AppointmentsController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
-            $table->addColumn('client_name', function ($row) {
-                return $row->client ? $row->client->name : '';
+            $table->addColumn('user_name', function ($row) {
+                return $row->user ? $row->user->name : '';
             });
 
             $table->addColumn('employee_name', function ($row) {
                 return $row->employee ? $row->employee->name : '';
             });
 
-            $table->editColumn('price', function ($row) {
-                return $row->price ? $row->price : "";
-            });
+          
             $table->editColumn('comments', function ($row) {
                 return $row->comments ? $row->comments : "";
             });
@@ -68,7 +66,7 @@ class AppointmentsController extends Controller
                 return implode(' ', $labels);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'client', 'employee', 'services']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'employee', 'services']);
 
             return $table->make(true);
         }
@@ -80,13 +78,13 @@ class AppointmentsController extends Controller
     {
         abort_if(Gate::denies('appointment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clients = Client::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $employees = Employee::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $services = Service::all()->pluck('name', 'id');
 
-        return view('admin.appointments.create', compact('clients', 'employees', 'services'));
+        return view('admin.appointments.create', compact('users', 'employees', 'services'));
     }
 
     public function store(StoreAppointmentRequest $request)
@@ -101,15 +99,15 @@ class AppointmentsController extends Controller
     {
         abort_if(Gate::denies('appointment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clients = Client::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $employees = Employee::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $services = Service::all()->pluck('name', 'id');
 
-        $appointment->load('client', 'employee', 'services');
+        $appointment->load('user', 'employee', 'services');
 
-        return view('admin.appointments.edit', compact('clients', 'employees', 'services', 'appointment'));
+        return view('admin.appointments.edit', compact('users', 'employees', 'services', 'appointment'));
     }
 
     public function update(UpdateAppointmentRequest $request, Appointment $appointment)
@@ -124,7 +122,7 @@ class AppointmentsController extends Controller
     {
         abort_if(Gate::denies('appointment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $appointment->load('client', 'employee', 'services');
+        $appointment->load('user', 'employee', 'services');
 
         return view('admin.appointments.show', compact('appointment'));
     }

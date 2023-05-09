@@ -94,7 +94,7 @@
 { data: 'email', name: 'email' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 1, 'desc' ]],
+    order: [[ 1, 'Desc' ]],
     pageLength: 100,
   };
   $('.datatable-Client').DataTable(dtOverrideGlobals);

@@ -23,7 +23,7 @@ class ServiceFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'price' => rand(10, 99),
+            'Desc' => rand(10, 99),
         ];
     }
 }

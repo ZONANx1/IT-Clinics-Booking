@@ -28,10 +28,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.service.fields.price') }}
+                            {{ trans('cruds.service.fields.Desc') }}
                         </th>
                         <td>
-                            ${{ $service->price }}
+                            ${{ $service->Desc }}
                         </td>
                     </tr>
                 </tbody>

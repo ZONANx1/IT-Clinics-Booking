@@ -19,7 +19,7 @@ class StoreAppointmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'client_id'   => [
+            'user_id'   => [
                 'required',
                 'integer',
             ],

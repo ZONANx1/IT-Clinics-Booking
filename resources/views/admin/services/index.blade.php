@@ -28,7 +28,7 @@
                         {{ trans('cruds.service.fields.name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.service.fields.price') }}
+                        {{ trans('cruds.service.fields.Desc') }}
                     </th>
                     <th>
                         &nbsp;
@@ -87,10 +87,9 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
-{ data: 'price', name: 'price' },
+{ data: 'Desc', name: 'Desc' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 1, 'desc' ]],
     pageLength: 100,
   };
   $('.datatable-Service').DataTable(dtOverrideGlobals);

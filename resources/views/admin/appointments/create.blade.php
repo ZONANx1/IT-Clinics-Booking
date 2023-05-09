@@ -9,16 +9,16 @@
     <div class="card-body">
         <form action="{{ route("admin.appointments.store") }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="form-group {{ $errors->has('client_id') ? 'has-error' : '' }}">
-                <label for="client">{{ trans('cruds.appointment.fields.client') }}*</label>
-                <select name="client_id" id="client" class="form-control select2" required>
-                    @foreach($clients as $id => $client)
-                        <option value="{{ $id }}" {{ (isset($appointment) && $appointment->client ? $appointment->client->id : old('client_id')) == $id ? 'selected' : '' }}>{{ $client }}</option>
+            <div class="form-group {{ $errors->has('user_id') ? 'has-error' : '' }}">
+                <label for="user">{{ trans('cruds.appointment.fields.user') }}*</label>
+                <select name="user_id" id="user" class="form-control select2" required>
+                    @foreach($users as $id => $user)
+                        <option value="{{ $id }}" {{ (isset($appointment) && $appointment->user ? $appointment->user->id : old('user_id')) == $id ? 'selected' : '' }}>{{ $user }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('client_id'))
+                @if($errors->has('user_id'))
                     <em class="invalid-feedback">
-                        {{ $errors->first('client_id') }}
+                        {{ $errors->first('user_id') }}
                     </em>
                 @endif
             </div>
@@ -59,18 +59,7 @@
                     {{ trans('cruds.appointment.fields.finish_time_helper') }}
                 </p>
             </div>
-            <div class="form-group {{ $errors->has('price') ? 'has-error' : '' }}">
-                <label for="price">{{ trans('cruds.appointment.fields.price') }}</label>
-                <input type="number" id="price" name="price" class="form-control" value="{{ old('price', isset($appointment) ? $appointment->price : '') }}" step="0.01">
-                @if($errors->has('price'))
-                    <em class="invalid-feedback">
-                        {{ $errors->first('price') }}
-                    </em>
-                @endif
-                <p class="helper-block">
-                    {{ trans('cruds.appointment.fields.price_helper') }}
-                </p>
-            </div>
+           
             <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
                 <label for="comments">{{ trans('cruds.appointment.fields.comments') }}</label>
                 <textarea id="comments" name="comments" class="form-control ">{{ old('comments', isset($appointment) ? $appointment->comments : '') }}</textarea>
