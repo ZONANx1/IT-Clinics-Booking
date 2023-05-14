@@ -16,6 +16,8 @@ class Service extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+        'start_time',
+        'finish_time',
     ];
 
     protected $fillable = [
@@ -24,6 +26,8 @@ class Service extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+        'start_time',
+        'finish_time',
     ];
 
     public function employees()
@@ -34,5 +38,11 @@ class Service extends Model
     public function appointments()
     {
         return $this->belongsToMany(Appointment::class);
+    }
+    
+    
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

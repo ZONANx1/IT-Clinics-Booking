@@ -41,6 +41,7 @@ class User extends Authenticatable
         'email_verified_at',
     ];
 
+
     protected function serializeDate(\DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

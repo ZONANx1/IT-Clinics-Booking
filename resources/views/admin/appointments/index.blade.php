@@ -30,18 +30,21 @@
                     <th>
                         {{ trans('cruds.appointment.fields.employee') }}
                     </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.start_time') }}
+                   <!--   <th>
+                   {{ trans('cruds.appointment.fields.start_time') }}
                     </th>
                     <th>
                         {{ trans('cruds.appointment.fields.finish_time') }}
+                    </th> !-->
+                    <th>
+                        {{ trans('cruds.appointment.fields.service') }}
                     </th>
                     <th>
                         {{ trans('cruds.appointment.fields.comments') }}
                     </th>
-                    <th>
+                   <!-- <th>
                         {{ trans('cruds.appointment.fields.services') }}
-                    </th>
+                    </th> !-->
                     <th>
                         &nbsp;
                     </th>
@@ -100,10 +103,11 @@
 { data: 'id', name: 'id' },
 { data: 'user_name', name: 'user.name' },
 { data: 'employee_name', name: 'employee.name' },
-{ data: 'start_time', name: 'start_time' },
-{ data: 'finish_time', name: 'finish_time' },
+{ data: 'service_name', name: 'service.name' },
+//{ data: 'start_time', name: 'start_time' },
+//{ data: 'finish_time', name: 'finish_time' },
 { data: 'comments', name: 'comments' },
-{ data: 'services', name: 'services.name' },
+//{ data: 'services', name: 'services.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     

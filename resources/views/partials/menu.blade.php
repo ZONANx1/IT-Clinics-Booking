@@ -91,7 +91,7 @@
                         {{ trans('cruds.appointment.title') }}
                     </a>
                 </li>
-            @endcan
+            @endcan          
             <li class="nav-item">
                 <a href="{{ route("admin.systemCalendar") }}" class="nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
                     <i class="nav-icon fa-fw fas fa-calendar">

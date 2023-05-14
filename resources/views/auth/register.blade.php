@@ -5,6 +5,7 @@
         <div class="card-group">
             <div class="card p-4">
                 <div class="card-body">
+                <img src="PLUS_Banner logo 280x60.png" class="center" alt="PLUS Logo">
                     @if(\Session::has('message'))
                         <p class="alert alert-info">
                             {{ \Session::get('message') }}
@@ -28,7 +29,7 @@
                                 </div>
                             @endif
                         </div>
-                        
+
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">

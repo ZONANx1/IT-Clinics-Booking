@@ -1,16 +1,24 @@
 @extends('layouts.app')
 @section('content')
+
 <div class="row justify-content-center">
+
     <div class="col-md-8">
+
         <div class="card-group">
+
             <div class="card p-4">
+
                 <div class="card-body">
+                <img src="PLUS_Banner logo 280x60.png" class="center" alt="PLUS Logo">
                     @if(\Session::has('message'))
                         <p class="alert alert-info">
                             {{ \Session::get('message') }}
                         </p>
                     @endif
+
                     <form method="POST" action="{{ route('login') }}">
+
                         {{ csrf_field() }}
                         <h1>{{ trans('panel.site_title') }}</h1>
                         <p class="text-muted">{{ trans('global.login') }}</p>
@@ -59,6 +67,12 @@
                             <div class="col-6 text-right">
                                 <a class="btn btn-link px-0" href="{{ route('password.request') }}">
                                     {{ trans('global.forgot_password') }}
+                                </a>
+
+                            </div>
+                            <div class="col-6 text-middle">
+                                <a class="btn btn-link px-0" href="register">
+                                {{ trans('global.register') }}
                                 </a>
 
                             </div>

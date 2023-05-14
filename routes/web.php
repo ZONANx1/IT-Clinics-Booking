@@ -50,4 +50,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('appointments', 'AppointmentsController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
+
 });
+
+ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'User', 'middleware' => ['auth']], function () {
+        Route::get('/', 'HomeController@index')->name('home');
+
+    // Appointments
+    Route::delete('appointments/destroy', 'AppointmentsUserController@massDestroy')->name('appointments.massDestroy');
+    Route::resource('appointments', 'AppointmentsUserController');
+
+    
+}); 

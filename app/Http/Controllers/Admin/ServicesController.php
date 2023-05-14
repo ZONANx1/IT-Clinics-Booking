@@ -47,6 +47,12 @@ class ServicesController extends Controller
             $table->editColumn('Desc', function ($row) {
                 return $row->Desc ? $row->Desc : "";
             });
+            $table->editColumn('start_time', function ($row) {
+                return $row->start_time ? $row->start_time : "";
+            });
+            $table->editColumn('finish_time', function ($row) {
+                return $row->finish_time ? $row->finish_time : "";
+            });
 
             $table->rawColumns(['actions', 'placeholder']);
 

@@ -36,6 +36,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.appointment.fields.service') }}
+                        </th>
+                        <td>
+                            {{ $appointment->service->name ?? '' }}
+                        </td>
+                    </tr>
+                    <!-- <tr>
+                       <th>
                             {{ trans('cruds.appointment.fields.start_time') }}
                         </th>
                         <td>
@@ -45,11 +53,11 @@
                     <tr>
                         <th>
                             {{ trans('cruds.appointment.fields.finish_time') }}
-                        </th>
+                        </th> 
                         <td>
                             {{ $appointment->finish_time }}
                         </td>
-                    </tr>
+                    </tr> !-->
                     <tr>
                         <th>
                             {{ trans('cruds.appointment.fields.comments') }}
@@ -58,24 +66,12 @@
                             {!! $appointment->comments !!}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            Services
-                        </th>
-                        <td>
-                            @foreach($appointment->services as $id => $services)
-                                <span class="label label-info label-many">{{ $services->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <a style="margin-top:20px;" class="btn btn-default" href="{{ url()->previous() }}">
                 {{ trans('global.back_to_list') }}
             </a>
         </div>
-
-
     </div>
 </div>
 @endsection

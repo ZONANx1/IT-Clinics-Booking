@@ -23,19 +23,23 @@ class StoreAppointmentRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'start_time'  => [
-                'required',
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
-            ],
-            'finish_time' => [
-                'required',
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
-            ],
+         //   'start_time'  => [
+         //     'required',
+         //      'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+         //   ],
+         //   'finish_time' => [
+         //       'required',
+         //       'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+         //   ],
             'services.*'  => [
                 'integer',
             ],
             'services'    => [
                 'array',
+            ],
+            'service_id'   => [
+                'required',
+                'integer',
             ],
         ];
     }

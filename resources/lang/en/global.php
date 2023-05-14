@@ -41,6 +41,7 @@ return [
     'timeTo'                               => 'To',
     'toggleNavigation'                     => 'Toggle navigation',
     'user_name'                            => 'Name',
+    'service_name'                         => 'Service Name',
     'verifyYourEmail'                      => 'Please verify your email',
     'verifyYourUser'                       => 'To finish your registration - site asks you to verify your email',
     'view'                                 => 'View',

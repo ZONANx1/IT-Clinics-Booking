@@ -16,6 +16,10 @@ class AddRelationshipFieldsToAppointmentsTable extends Migration
             $table->unsignedInteger('employee_id')->nullable();
 
             $table->foreign('employee_id', 'employee_fk_360715')->references('id')->on('employees');
+
+            $table->unsignedInteger('service_id')->nullable();
+
+            $table->foreign('service_id', 'service_fk_360716')->references('id')->on('services');
         });
     }
 }

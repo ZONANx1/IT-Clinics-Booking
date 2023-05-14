@@ -31,7 +31,23 @@
                             {{ trans('cruds.service.fields.Desc') }}
                         </th>
                         <td>
-                            ${{ $service->Desc }}
+                            {{ $service->Desc }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.service.fields.start_time') }}
+                        </th>
+                        <td>
+                            {{ $service->start_time }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.service.fields.finish_time') }}
+                        </th>
+                        <td>
+                            {{ $service->finish_time }}
                         </td>
                     </tr>
                 </tbody>

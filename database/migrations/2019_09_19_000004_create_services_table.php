@@ -10,6 +10,10 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
+            
+            $table->datetime('start_time');
+
+            $table->datetime('finish_time');
 
             $table->string('name');
 

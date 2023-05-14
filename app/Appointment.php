@@ -14,23 +14,24 @@ class Appointment extends Model
     public $table = 'appointments';
 
     protected $dates = [
-        'start_time',
+      //  'start_time',
         'created_at',
         'updated_at',
         'deleted_at',
-        'finish_time',
+       // 'finish_time',
     ];
 
     protected $fillable = [
       
         'comments',
         'user_id',
-        'start_time',
+        'service_id',
+       // 'start_time',
         'created_at',
         'updated_at',
         'deleted_at',
         'employee_id',
-        'finish_time',
+       // 'finish_time',
     ];
 
     public function user()
@@ -43,12 +44,17 @@ class Appointment extends Model
         return $this->belongsTo(Employee::class, 'employee_id');
     }
 
+    public function service()
+    {
+        return $this->belongsTo(Service::class, 'service_id');
+    }
+
     protected function serializeDate(\DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function services()
+     public function services()
     {
         return $this->belongsToMany(Service::class);
     }

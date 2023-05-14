@@ -23,7 +23,7 @@
             </div>
             <div class="form-group {{ $errors->has('Desc') ? 'has-error' : '' }}">
                 <label for="Desc">{{ trans('cruds.service.fields.Desc') }}</label>
-                <textarea id="Desc" name="Desc" class="form-control ">{{ old('Desc', isset($appointment) ? $appointment->Desc : '') }}</textarea>
+                <textarea id="Desc" name="Desc" class="form-control ">{{ old('Desc', isset($service) ? $service->Desc : '') }}</textarea>
                 @if($errors->has('Desc'))
                     <em class="invalid-feedback">
                         {{ $errors->first('Desc') }}
@@ -31,6 +31,30 @@
                 @endif
                 <p class="helper-block">
                     {{ trans('cruds.service.fields.Desc_helper') }}
+                </p>
+            </div>
+            <div class="form-group {{ $errors->has('start_time') ? 'has-error' : '' }}">
+                <label for="start_time">{{ trans('cruds.service.fields.start_time') }}*</label>
+                <input type="text" id="start_time" name="start_time" class="form-control datetime" value="{{ old('start_time', isset($service) ? $service->start_time : '') }}" required>
+                @if($errors->has('start_time'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('start_time') }}
+                    </em>
+                @endif
+                <p class="helper-block">
+                    {{ trans('cruds.service.fields.start_time_helper') }}
+                </p>
+            </div>
+            <div class="form-group {{ $errors->has('finish_time') ? 'has-error' : '' }}">
+                <label for="finish_time">{{ trans('cruds.service.fields.finish_time') }}*</label>
+                <input type="text" id="finish_time" name="finish_time" class="form-control datetime" value="{{ old('finish_time', isset($service) ? $service->finish_time : '') }}" required>
+                @if($errors->has('finish_time'))
+                    <em class="invalid-feedback">
+                        {{ $errors->first('finish_time') }}
+                    </em>
+                @endif
+                <p class="helper-block">
+                    {{ trans('cruds.service.fields.finish_time_helper') }}
                 </p>
             </div>
             <div>

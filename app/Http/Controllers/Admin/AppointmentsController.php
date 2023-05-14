@@ -5,84 +5,83 @@ namespace App\Http\Controllers\Admin;
 use App\Appointment;
 use App\User;
 use App\Employee;
+use App\Service;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyAppointmentRequest;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
-use App\Service;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentsController extends Controller
 {
-    public function index(Request $request)
-    {
-        if ($request->ajax()) {
-            $query = Appointment::with(['user', 'employee', 'services'])->select(sprintf('%s.*', (new Appointment)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'appointment_show';
-                $editGate      = 'appointment_edit';
-                $deleteGate    = 'appointment_delete';
-                $crudRoutePart = 'appointments';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->addColumn('employee_name', function ($row) {
-                return $row->employee ? $row->employee->name : '';
-            });
-
-          
-            $table->editColumn('comments', function ($row) {
-                return $row->comments ? $row->comments : "";
-            });
-            $table->editColumn('services', function ($row) {
-                $labels = [];
-
-                foreach ($row->services as $service) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $service->name);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user', 'employee', 'services']);
-
-            return $table->make(true);
+   public function index(Request $request)
+{
+    if ($request->ajax()) {
+        $query = Appointment::with(['user', 'employee', 'service'])->select(sprintf('%s.*', (new Appointment)->table));
+        if (!Gate::allows('Admin')) {
+            $query->where('user_id', auth()->user()->id);
         }
+        $table = Datatables::of($query);
 
-        return view('admin.appointments.index');
+        $table->addColumn('placeholder', '&nbsp;');
+        $table->addColumn('actions', '&nbsp;');
+
+        $table->editColumn('actions', function ($row) {
+            $viewGate      = 'appointment_show';
+            $editGate      = 'appointment_edit';
+            $deleteGate    = 'appointment_delete';
+            $crudRoutePart = 'appointments';
+
+            return view('partials.datatablesActions', compact(
+                'viewGate',
+                'editGate',
+                'deleteGate',
+                'crudRoutePart',
+                'row'
+            ));
+        });
+
+        $table->editColumn('id', function ($row) {
+            return $row->id ? $row->id : "";
+        });
+        $table->addColumn('user_name', function ($row) {
+            return $row->user ? $row->user->name : '';
+        });
+
+        $table->addColumn('employee_name', function ($row) {
+            return $row->employee ? $row->employee->name : '';
+        });
+
+        $table->addColumn('service_name', function ($row) {
+            return $row->service ? $row->service->name : '';
+        });
+
+        $table->editColumn('comments', function ($row) {
+            return $row->comments ? $row->comments : "";
+        });
+
+
+        $table->rawColumns(['actions', 'placeholder', 'user', 'employee', 'service']);
+
+        return $table->make(true);
     }
+
+    return view('admin.appointments.index');
+}
 
     public function create()
     {
         abort_if(Gate::denies('appointment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::whereNotIn('name', ['admin', 'authoriser', 'user', 'user2'])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $employees = Employee::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $services = Service::all()->pluck('name', 'id');
+        $services = Service::all()->pluck('name', 'id', 'start_time', 'finish_time')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.appointments.create', compact('users', 'employees', 'services'));
     }
@@ -99,13 +98,13 @@ class AppointmentsController extends Controller
     {
         abort_if(Gate::denies('appointment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $users = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $users = User::whereNotIn('name', ['admin', 'authoriser', 'user', 'user2'])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $employees = Employee::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $services = Service::all()->pluck('name', 'id');
+        $services = Service::all()->pluck('name', 'id', 'start_time', 'finish_time')->prepend(trans('global.pleaseSelect'), '');
 
-        $appointment->load('user', 'employee', 'services');
+        $appointment->load('user', 'employee', 'service');
 
         return view('admin.appointments.edit', compact('users', 'employees', 'services', 'appointment'));
     }
@@ -122,7 +121,7 @@ class AppointmentsController extends Controller
     {
         abort_if(Gate::denies('appointment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $appointment->load('user', 'employee', 'services');
+        $appointment->load('user', 'employee', 'service');
 
         return view('admin.appointments.show', compact('appointment'));
     }

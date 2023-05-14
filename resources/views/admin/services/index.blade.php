@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('content')
 @can('service_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.services.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.service.title_singular') }}
-            </a>
-        </div>
+<div style="margin-bottom: 10px;" class="row">
+    <div class="col-lg-12">
+        <a class="btn btn-success" href="{{ route("admin.services.create") }}">
+            {{ trans('global.add') }} {{ trans('cruds.service.title_singular') }}
+        </a>
     </div>
+</div>
 @endcan
 <div class="card">
     <div class="card-header">
@@ -31,13 +31,17 @@
                         {{ trans('cruds.service.fields.Desc') }}
                     </th>
                     <th>
+                        {{ trans('cruds.service.fields.start_time') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.service.fields.finish_time') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
             </thead>
         </table>
-
-
     </div>
 </div>
 @endsection
@@ -88,6 +92,8 @@
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'Desc', name: 'Desc' },
+{ data: 'start_time', name: 'start_time' },
+{ data: 'finish_time', name: 'finish_time' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     pageLength: 100,
