@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use App\Appointment;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
@@ -30,7 +31,7 @@ class UpdateAppointmentRequest extends FormRequest
          //   'finish_time' => [
          //       'required',
          //       'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
-        //    ], 
+        //    ],
             'services.*'  => [
                 'integer',
             ],
@@ -39,7 +40,9 @@ class UpdateAppointmentRequest extends FormRequest
             ],
             'service_id'   => [
                 'required',
-                'integer',
+                Rule::unique('appointments')->where(function ($query) {
+                    return $query->where('user_id', $this->user_id);
+                }),
             ],
         ];
     }

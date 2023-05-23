@@ -30,7 +30,7 @@
                     <th>
                         {{ trans('cruds.appointment.fields.employee') }}
                     </th>
-                   <!--   <th>
+                     <!--  <th>
                    {{ trans('cruds.appointment.fields.start_time') }}
                     </th>
                     <th>
@@ -110,7 +110,7 @@
 //{ data: 'services', name: 'services.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    
+
     pageLength: 100,
   };
   $('.datatable-Appointment').DataTable(dtOverrideGlobals);

@@ -88,8 +88,15 @@ class AppointmentsController extends Controller
 
     public function store(StoreAppointmentRequest $request)
     {
+        $service = Service::findOrFail($request->input('service_id'));
+
+        // Get the first employee associated with the service
+        $employee = $service->employees()->first();
+
+        // Create the appointment and assign the employee
         $appointment = Appointment::create($request->all());
-        $appointment->services()->sync($request->input('services', []));
+        $appointment->employee_id = $employee->id;
+        $appointment->save();
 
         return redirect()->route('admin.appointments.index');
     }
@@ -111,10 +118,18 @@ class AppointmentsController extends Controller
 
     public function update(UpdateAppointmentRequest $request, Appointment $appointment)
     {
-        $appointment->update($request->all());
-        $appointment->services()->sync($request->input('services', []));
+       // Retrieve the selected service
+       $service = Service::findOrFail($request->input('service_id'));
 
-        return redirect()->route('admin.appointments.index');
+       // Get the first employee associated with the service
+       $employee = $service->employees()->first();
+
+       // Update the appointment and assign the employee
+       $appointment->update($request->all());
+       $appointment->employee_id = $employee->id;
+       $appointment->save();
+
+       return redirect()->route('admin.appointments.index');
     }
 
     public function show(Appointment $appointment)

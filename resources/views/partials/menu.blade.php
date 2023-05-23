@@ -72,7 +72,7 @@
                     </a>
                 </li>
             @endcan
-            @can('client_access')
+           <!-- @can('client_access')
                 <li class="nav-item">
                     <a href="{{ route("admin.clients.index") }}" class="nav-link {{ request()->is('admin/clients') || request()->is('admin/clients/*') ? 'active' : '' }}">
                         <i class="fa-fw fas fa-cogs nav-icon">
@@ -81,7 +81,7 @@
                         {{ trans('cruds.client.title') }}
                     </a>
                 </li>
-            @endcan
+            @endcan !-->
             @can('appointment_access')
                 <li class="nav-item">
                     <a href="{{ route("admin.appointments.index") }}" class="nav-link {{ request()->is('admin/appointments') || request()->is('admin/appointments/*') ? 'active' : '' }}">
@@ -91,7 +91,7 @@
                         {{ trans('cruds.appointment.title') }}
                     </a>
                 </li>
-            @endcan          
+            @endcan
             <li class="nav-item">
                 <a href="{{ route("admin.systemCalendar") }}" class="nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
                     <i class="nav-icon fa-fw fas fa-calendar">

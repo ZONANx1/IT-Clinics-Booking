@@ -53,7 +53,7 @@
                     <tr>
                         <th>
                             {{ trans('cruds.appointment.fields.finish_time') }}
-                        </th> 
+                        </th>
                         <td>
                             {{ $appointment->finish_time }}
                         </td>

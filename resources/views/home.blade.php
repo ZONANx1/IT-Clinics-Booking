@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="numbers">
-                            <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Supervisor</p>
+                            <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Trainers</p>
                             <h5 class="font-weight-bolder mb-0">
                                 {{ $total_employee }}
                                 <span class="text-success text-sm font-weight-bolder">+10%</span>

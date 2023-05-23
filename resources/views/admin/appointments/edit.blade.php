@@ -23,7 +23,7 @@
                     </em>
                 @endif
             </div>
-            <div class="form-group {{ $errors->has('employee_id') ? 'has-error' : '' }}">
+            <!-- <div class="form-group {{ $errors->has('employee_id') ? 'has-error' : '' }}">
                 <label for="employee">{{ trans('cruds.appointment.fields.employee') }}</label>
                 <select name="employee_id" id="employee" class="form-control select2">
                     @foreach($employees as $id => $employee)
@@ -35,7 +35,7 @@
                         {{ $errors->first('employee_id') }}
                     </em>
                 @endif
-            </div>
+            </div> !-->
             <div class="form-group {{ $errors->has('service_id') ? 'has-error' : '' }}">
                 <label for="service">{{ trans('cruds.appointment.fields.service') }}</label>
                 <select name="service_id" id="service" class="form-control select2">
@@ -68,12 +68,12 @@
                     <em class="invalid-feedback">
                         {{ $errors->first('finish_time') }}
                     </em>
-                @endif 
+                @endif
                 <p class="helper-block">
                     {{ trans('cruds.appointment.fields.finish_time_helper') }}
                 </p>
             </div> !-->
-       
+
             <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
                 <label for="comments">{{ trans('cruds.appointment.fields.comments') }}</label>
                 <textarea id="comments" name="comments" class="form-control ">{{ old('comments', isset($appointment) ? $appointment->comments : '') }}</textarea>

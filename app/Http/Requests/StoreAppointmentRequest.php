@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use App\Appointment;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
@@ -39,7 +40,9 @@ class StoreAppointmentRequest extends FormRequest
             ],
             'service_id'   => [
                 'required',
-                'integer',
+                Rule::unique('appointments')->where(function ($query) {
+                    return $query->where('user_id', $this->user_id);
+                }),
             ],
         ];
     }

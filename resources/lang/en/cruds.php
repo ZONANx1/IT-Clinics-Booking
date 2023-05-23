@@ -88,8 +88,8 @@ return [
         ],
     ],
     'employee'       => [
-        'title'          => 'Supervisors',
-        'title_singular' => 'Supervisor',
+        'title'          => 'Trainers',
+        'title_singular' => 'Trainer',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
@@ -141,7 +141,7 @@ return [
             'username_helper'      => '',
             'user'             => 'User',
             'user_helper'      => '',
-            'employee'           => 'Supervisor',
+            'employee'           => 'Trainer',
             'employee_helper'    => '',
             'service'           => 'Service',
             'service_helper'    => '',
