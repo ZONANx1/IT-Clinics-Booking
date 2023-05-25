@@ -22,7 +22,7 @@
                     </em>
                 @endif
             </div>
-            <div class="form-group {{ $errors->has('employee_id') ? 'has-error' : '' }}">
+            <!-- <div class="form-group {{ $errors->has('employee_id') ? 'has-error' : '' }}">
                 <label for="employee">{{ trans('cruds.appointment.fields.employee') }}</label>
                 <select name="employee_id" id="employee" class="form-control select2">
                     @foreach($employees as $id => $employee)
@@ -34,7 +34,7 @@
                         {{ $errors->first('employee_id') }}
                     </em>
                 @endif
-            </div>
+            </div> !-->
             <div class="form-group {{ $errors->has('service_id') ? 'has-error' : '' }}">
                 <label for="service">{{ trans('cruds.appointment.fields.service') }}</label>
                 <select name="service_id" id="service" class="form-control select2">
@@ -48,7 +48,7 @@
                     </em>
                 @endif
             </div>
-        
+
            <!-- <div class="form-group {{ $errors->has('start_time') ? 'has-error' : '' }}">
                 <label for="start_time">{{ trans('cruds.appointment.fields.start_time') }}*</label>
                 <input type="text" id="start_time" name="start_time" class="form-control datetime" value="{{ old('start_time', isset($appointment) ? $appointment->start_time : '') }}" >
@@ -72,7 +72,7 @@
                 <p class="helper-block">
                     {{ trans('cruds.appointment.fields.finish_time_helper') }}
                 </p>
-            </div> 
+            </div>
             <div class="form-group {{ $errors->has('services') ? 'has-error' : '' }}">
                 <label for="services">{{ trans('cruds.appointment.fields.services') }}
                     <span class="btn btn-info btn-xs select-all">{{ trans('global.select_all') }}</span>
@@ -91,7 +91,7 @@
                     {{ trans('cruds.appointment.fields.services_helper') }}
                 </p>
             </div> -->
-            
+
             <div class="form-group {{ $errors->has('comments') ? 'has-error' : '' }}">
                 <label for="comments">{{ trans('cruds.appointment.fields.comments') }}</label>
                 <textarea id="comments" name="comments" class="form-control ">{{ old('comments', isset($appointment) ? $appointment->comments : '') }}</textarea>
