@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'IT Clinics Booking',
+    'site_title' => 'DIS IT Clinics',
 ];
