@@ -28,5 +28,9 @@ class ForgotPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+
+
+        return redirect()->back()->with('message1', 'You have successfully request a email reset for DIS IT Clinics, Please check "junk/spam" folder in your email account.');
+
     }
 }

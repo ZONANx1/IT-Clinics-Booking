@@ -36,7 +36,16 @@ class UsersTableSeeder extends Seeder
                 'created_at'     => '2023-05-09 00:00:00',
                 'updated_at'     => '2023-05-09 00:08:00',
         ]);
+        User::create([
+        	'id'             => 4,
+                'name'           => 'Test',
+                'email'          => 'test@user.com',
+                'password'       => 'user1234',
+                'remember_token' => null,
+                'created_at'     => '2023-05-09 00:00:00',
+                'updated_at'     => '2023-05-09 00:08:00',
+        ]);
 
-     
+
     }
 }

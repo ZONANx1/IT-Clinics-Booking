@@ -11,6 +11,11 @@
                             {{ \Session::get('message') }}
                         </p>
                     @endif
+                    @if(\Session::has('error'))
+                    <p class="alert alert-info">
+                        {{ \Session::get('error') }}
+                    </p>
+                @endif
                     <form method="POST" class="signin-form" autocomplete="off" action="{{ route('register') }}">
                         {{ csrf_field() }}
                         <h1>{{ trans('panel.site_title') }}</h1>

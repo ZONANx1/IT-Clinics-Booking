@@ -15,17 +15,24 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\AppointmentCreated; // Import the email class
+use Illuminate\Support\Facades\Mail; // Import the Mail facade
 
 class AppointmentsController extends Controller
 {
    public function index(Request $request)
 {
-    if ($request->ajax()) {
+     if ($request->ajax()) {
         $query = Appointment::with(['user', 'employee', 'service'])->select(sprintf('%s.*', (new Appointment)->table));
-        if (!Gate::allows('Admin')) {
-            $query->where('user_id', auth()->user()->id);
+
+
+        if (Auth::user()->isAdmin()) {
+            // Admin user can access all appointments
+        } else {
+            $query->where('user_id', Auth::user()->id);
         }
-        $table = Datatables::of($query);
+
+        $table = DataTables::of($query);
 
         $table->addColumn('placeholder', '&nbsp;');
         $table->addColumn('actions', '&nbsp;');
@@ -64,7 +71,6 @@ class AppointmentsController extends Controller
             return $row->comments ? $row->comments : "";
         });
 
-
         $table->rawColumns(['actions', 'placeholder', 'user', 'employee', 'service']);
 
         return $table->make(true);
@@ -97,6 +103,11 @@ class AppointmentsController extends Controller
         $appointment = Appointment::create($request->all());
         $appointment->employee_id = $employee->id;
         $appointment->save();
+
+         // Send email to the user
+    $user = $appointment->user;
+    Mail::to($user->email)->send(new AppointmentCreated($appointment, $user));
+
 
         return redirect()->route('admin.appointments.index');
     }

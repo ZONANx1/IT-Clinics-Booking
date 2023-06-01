@@ -29,6 +29,12 @@
         <div class="card-group">
             <div class="card p-4">
                 <div class="card-body">
+
+                    @if(\Session::has('message1'))
+                    <p class="alert alert-info">
+                        {{ \Session::get('message1') }}
+                    </p>
+                @endif
                     <form method="POST" action="{{ route('password.email') }}">
                         {{ csrf_field() }}
                         <h1>

@@ -8,7 +8,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use App\Role;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -68,7 +69,7 @@ class RegisterController extends Controller
 
         $request->validate([
            'name' => ['required', 'string', 'max:255'],
-           'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],  
+           'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
         $user = new User();
@@ -76,16 +77,21 @@ class RegisterController extends Controller
         $user->email = $request->email;
 
         $user->password = \Hash::make($request->password);
-        
 
-        if( $user->save() ){
 
-            echo '<script>alert("Welcome to Geeks for Geeks")</script>';
-            return redirect('login');
-            
-        }else{
-            return redirect()->back()->with('error','Failed to register');
+        if ($user->save()) {
+            // Assign role_id = 3 to the user in the role_user table
+            $role = Role::where('id', 3)->first(); // Assuming you have a Role model and the role_id is 3
+            if ($role) {
+                DB::table('role_user')->insert([
+                    'user_id' => $user->id,
+                    'role_id' => $role->id,
+                ]);
+            }
+
+            return redirect('login')->with('message', 'You have successfully registered an account for DIS IT Clinics');
+        } else {
+            return redirect()->back()->with('error', 'Failed to register');
         }
-
-   }
+    }
 }

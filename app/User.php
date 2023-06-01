@@ -41,6 +41,10 @@ class User extends Authenticatable
         'email_verified_at',
     ];
 
+    public function isAdmin()
+    {
+        return $this->roles()->where('role_id', 1)->exists();
+    }
 
     protected function serializeDate(\DateTimeInterface $date)
     {
