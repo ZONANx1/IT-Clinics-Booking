@@ -47,7 +47,7 @@
                             {{ trans('cruds.appointment.fields.start_time') }}
                         </th>
                         <td>
-                            {{ $appointment->service->start_time ? \Carbon\Carbon::parse($appointment->service->start_time)->format('h:i:s A') : '' }}
+                            {{ $appointment->service->start_time ? \Carbon\Carbon::parse($appointment->service->start_time)->format('h:i A') : '' }}
                         </td>
                     </tr>
                     <tr>
@@ -55,7 +55,7 @@
                             {{ trans('cruds.appointment.fields.finish_time') }}
                         </th>
                         <td>
-                            {{ $appointment->service->finish_time ? \Carbon\Carbon::parse($appointment->service->finish_time)->format('h:i:s A') : '' }}
+                            {{ $appointment->service->finish_time ? \Carbon\Carbon::parse($appointment->service->finish_time)->format('h:i A') : '' }}
                         </td>
                     </tr>
                     <tr>

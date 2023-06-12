@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 
 class SystemCalendarController extends Controller
 {
-
     public function index()
     {
         $events = [];
@@ -18,11 +17,18 @@ class SystemCalendarController extends Controller
             if (!$appointment->service || !$appointment->service->start_time) {
                 continue;
             }
+
+            $user = $appointment->user;
+            $employee = $appointment->employee;
+
+            $firstNameUser = explode(' ', $user->name)[0]; // Extract the first name
+            $firstNameEmployee = explode(' ', $employee->name)[0]; // Extract the first name
+
+            $serviceTitle = preg_replace('/\(\d+ [A-Za-z]+ \d+\)/', '', $appointment->service->name); // Remove (9 June 2023)
+
             $events[] = [
                 'start' => $appointment->service->start_time,
-                'title' => $appointment->service->name,
-                'finish' => $appointment->employee->name,
-                'test' => $appointment->user->name . ' ('.$appointment->employee->name.')',
+                'title' => $firstNameUser. ' - ' . $serviceTitle  . ' - ' . $firstNameEmployee,
                 'url'   => route('admin.appointments.show', $appointment->id),
             ];
         }
@@ -30,4 +36,3 @@ class SystemCalendarController extends Controller
         return view('admin.calendar.calendar', compact('events'));
     }
 }
-
