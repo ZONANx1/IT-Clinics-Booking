@@ -20,11 +20,10 @@ use Illuminate\Support\Facades\Mail; // Import the Mail facade
 
 class AppointmentsController extends Controller
 {
-   public function index(Request $request)
+    public function index(Request $request)
 {
-     if ($request->ajax()) {
+    if ($request->ajax()) {
         $query = Appointment::with(['user', 'employee', 'service'])->select(sprintf('%s.*', (new Appointment)->table));
-
 
         if (Auth::user()->isAdmin()) {
             // Admin user can access all appointments
@@ -43,24 +42,32 @@ class AppointmentsController extends Controller
             $deleteGate    = 'appointment_delete';
             $crudRoutePart = 'appointments';
 
-            return view('partials.datatablesActions', compact(
-                'viewGate',
-                'editGate',
-                'deleteGate',
-                'crudRoutePart',
-                'row'
-            ));
+            if (Auth::user()->isAdmin()) {
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            }
+
+            // Regular user, hide the edit and delete buttons
+            return '<a class="btn btn-xs btn-primary" href="' . route('admin.appointments.show', $row->id) . '">' . trans('global.view') . '</a>';
         });
+
 
         $table->editColumn('id', function ($row) {
             return $row->id ? $row->id : "";
         });
+
         $table->addColumn('user_name', function ($row) {
             return $row->user ? $row->user->name : '';
         });
 
         $table->addColumn('employee_name', function ($row) {
-            return $row->employee ? $row->employee->name : '';
+            $employeeNames = $row->service->employees->pluck('name')->implode(', ');
+            return $employeeNames;
         });
 
         $table->addColumn('service_name', function ($row) {
@@ -71,6 +78,15 @@ class AppointmentsController extends Controller
             return $row->comments ? $row->comments : "";
         });
 
+        // Add start_time and finish_time columns
+        $table->addColumn('start_time', function ($row) {
+            return $row->service ? $row->service->start_time : '';
+        });
+
+        $table->addColumn('finish_time', function ($row) {
+            return $row->service ? $row->service->finish_time : '';
+        });
+
         $table->rawColumns(['actions', 'placeholder', 'user', 'employee', 'service']);
 
         return $table->make(true);
@@ -78,6 +94,7 @@ class AppointmentsController extends Controller
 
     return view('admin.appointments.index');
 }
+
 
     public function create()
     {
@@ -87,30 +104,47 @@ class AppointmentsController extends Controller
 
         $employees = Employee::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $services = Service::all()->pluck('name', 'id', 'start_time', 'finish_time')->prepend(trans('global.pleaseSelect'), '');
+        $services = Service::all();
 
         return view('admin.appointments.create', compact('users', 'employees', 'services'));
     }
 
-    public function store(StoreAppointmentRequest $request)
-    {
-        $service = Service::findOrFail($request->input('service_id'));
+   public function store(StoreAppointmentRequest $request)
+{
+    $service = Service::findOrFail($request->input('service_id'));
 
-        // Get the first employee associated with the service
-        $employee = $service->employees()->first();
+    // Check if the user has already booked the same service
+    $existingAppointment = Appointment::where('user_id', Auth::user()->id)
+        ->where('service_id', $service->id)
+        ->first();
 
-        // Create the appointment and assign the employee
-        $appointment = Appointment::create($request->all());
-        $appointment->employee_id = $employee->id;
-        $appointment->save();
+    if ($existingAppointment) {
+        return redirect()->back()->withInput()->withErrors(['service_id' => 'You have already booked this service.']);
+    }
 
-         // Send email to the user
+    // Check if the service has reached the booking limit
+    $bookingCount = $service->appointments()->count();
+    $bookingLimit = 2; // Set the booking limit to 2
+
+    if ($bookingCount >= $bookingLimit) {
+        return redirect()->back()->withInput()->withErrors(['service_id' => 'Sorry, this service is fully booked.']);
+    }
+
+    // Get the first employee associated with the service
+    $employee = $service->employees()->first();
+
+    // Create the appointment and assign the employee
+    $appointment = Appointment::create($request->all());
+    $appointment->employee_id = $employee->id;
+    $appointment->save();
+
+    // Send email to the user
     $user = $appointment->user;
     Mail::to($user->email)->send(new AppointmentCreated($appointment, $user));
 
+    return redirect()->route('admin.appointments.index');
+}
 
-        return redirect()->route('admin.appointments.index');
-    }
 
     public function edit(Appointment $appointment)
     {

@@ -15,7 +15,7 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Service">
+        <table class="table table-bordered table-striped table-hover ajaxTable datatable datatable-Service">
             <thead>
                 <tr>
                     <th width="10">
@@ -89,21 +89,36 @@
     ajax: "{{ route('admin.services.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
-{ data: 'Desc', name: 'Desc' },
-{ data: 'start_time', name: 'start_time' },
-{ data: 'finish_time', name: 'finish_time' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+      { data: 'id', name: 'id' },
+      { data: 'name', name: 'name' },
+      { data: 'Desc', name: 'Desc' },
+      {
+        data: 'start_time',
+        name: 'start_time',
+      },
+      {
+        data: 'finish_time',
+        name: 'finish_time',
+      },
+      { data: 'actions', name: '{{ trans('global.actions') }}' }
+    ],
+    columnDefs: [
+      {
+        targets: [4, 5], // Targets the start_time and finish_time columns
+        render: function (data) {
+          if (data) {
+            return moment(data, 'YYYY-MM-DD HH:mm:ss').format('h:mm A');
+          }
+          return '';
+        },
+      },
     ],
     pageLength: 100,
   };
   $('.datatable-Service').DataTable(dtOverrideGlobals);
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-        $($.fn.dataTable.tables(true)).DataTable()
-            .columns.adjust();
-    });
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+    $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+  });
 });
-
 </script>
 @endsection

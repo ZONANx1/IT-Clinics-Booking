@@ -37,10 +37,10 @@ class Service extends Model
 
     public function appointments()
     {
-        return $this->belongsToMany(Appointment::class);
+        return $this->hasMany(Appointment::class);
     }
-    
-    
+
+
     protected function serializeDate(\DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

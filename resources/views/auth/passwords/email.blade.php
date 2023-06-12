@@ -10,8 +10,7 @@
                             <p class="text-sm mb-0 text-capitalize font-weight-bold">If there's any issues</p>
                             <h5 class="font-weight-bolder mb-0">
                                 Please contact Hilman or Khairul
-
-                                <span class="text-success text-sm font-weight-bolder"> Email: hilman.kasim@plus.com.my
+                                <span class="text-success text-sm font-weight-bolder">Email: hilman.kasim@plus.com.my
                                     Email: khairulamirin.ismail@plus.com.my</span>
                             </h5>
                         </div>
@@ -29,12 +28,11 @@
         <div class="card-group">
             <div class="card p-4">
                 <div class="card-body">
-
-                    @if(\Session::has('message1'))
-                    <p class="alert alert-info">
-                        {{ \Session::get('message1') }}
-                    </p>
-                @endif
+                    @if (session('message1'))
+                        <div class="alert alert-info" role="alert">
+                            {{ session('message1') }}
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('password.email') }}">
                         {{ csrf_field() }}
                         <h1>
@@ -64,6 +62,7 @@
                             </div>
                         </div>
                     </form>
+                    <p class="text-muted mt-3">** Please check both your inbox and junk/spam folders for the reset email. If you find the email in the junk/spam folder, mark it as "Not Spam" to ensure future emails are delivered to your inbox. **</p>
                 </div>
             </div>
         </div>

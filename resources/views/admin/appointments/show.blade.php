@@ -42,12 +42,12 @@
                             {{ $appointment->service->name ?? '' }}
                         </td>
                     </tr>
-                    <!-- <tr>
-                       <th>
+                    <tr>
+                        <th>
                             {{ trans('cruds.appointment.fields.start_time') }}
                         </th>
                         <td>
-                            {{ $appointment->start_time }}
+                            {{ $appointment->service->start_time ? \Carbon\Carbon::parse($appointment->service->start_time)->format('h:i:s A') : '' }}
                         </td>
                     </tr>
                     <tr>
@@ -55,9 +55,9 @@
                             {{ trans('cruds.appointment.fields.finish_time') }}
                         </th>
                         <td>
-                            {{ $appointment->finish_time }}
+                            {{ $appointment->service->finish_time ? \Carbon\Carbon::parse($appointment->service->finish_time)->format('h:i:s A') : '' }}
                         </td>
-                    </tr> !-->
+                    </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.appointment.fields.comments') }}
